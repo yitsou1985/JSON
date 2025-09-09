@@ -1,8 +1,6 @@
  const fileInput = document.getElementById("fileInput");
     const output = document.getElementById("output");
-   document.getElementById("clearBtn").addEventListener("click", function () {
-      document.getElementById("fileInput").value = "";
-    });
+
     fileInput.addEventListener("change", (event) => {
       const file = event.target.files[0];
       if (!file) return;
@@ -30,11 +28,11 @@
 
               // Ajouter un bouton "Copier"
               const btn = document.createElement("button");
-              btn.textContent = "Copier";
+              btn.textContent = "Copied";
               btn.addEventListener("click", () => {
                 navigator.clipboard.writeText(item.command);
                 btn.textContent = "Copié !";
-                setTimeout(() => btn.textContent = "Copier", 1000);
+                setTimeout(() => btn.textContent = "Copied", 1000);
               });
 
               commandDiv.appendChild(btn);
@@ -44,7 +42,7 @@
             output.appendChild(operatorDiv);
           }
         } catch (err) {
-          output.textContent = "❌ Erreur : fichier JSON invalide";
+          output.textContent = "❌ Erreur : JSON invalid";
         }
       };
     
