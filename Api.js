@@ -1,6 +1,12 @@
  const fileInput = document.getElementById("fileInput");
     const output = document.getElementById("output");
+const searchInput = document.getElementById("searchInput");
+    let allCommands = [];
 
+
+ document.getElementById("clearBtn").addEventListener("click", function () {
+      document.getElementById("searchInput").value = "";
+    });
     fileInput.addEventListener("change", (event) => {
       const file = event.target.files[0];
       if (!file) return;
@@ -10,6 +16,7 @@
         try {
           const json = JSON.parse(e.target.result);
           output.innerHTML = ""; // reset affichage
+         allCommands = []; // reset
 
           for (const sectionName in json) {
             const sectionData = json[sectionName];
@@ -38,7 +45,9 @@
               commandDiv.appendChild(btn);
               operatorDiv.appendChild(commandDiv);
             });
-
+allCommands.push({ element: commandDiv, text: item.command.toLowerCase() });
+            });
+         
             output.appendChild(operatorDiv);
           }
         } catch (err) {
@@ -46,5 +55,22 @@
         }
       };
     
-      reader.readAsText(file);
+     reader.readAsText(file);
     });
+    // 🎯 Ajout du filtre
+searchInput.addEventListener("input", () => {
+  const filter = searchInput.value.toLowerCase();
+  allCommands.forEach(cmd => {
+    if (cmd.text.includes(filter)) {
+      cmd.element.style.display = "";
+    } else {
+      cmd.element.style.display = "none";
+    }
+  });
+});
+const resetBtn = document.getElementById("resetBtn");
+
+resetBtn.addEventListener("click", () => {
+  searchInput.value = "";
+  allCommands.forEach(cmd => cmd.element.style.display = "");
+});
