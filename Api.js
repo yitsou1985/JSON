@@ -16,7 +16,7 @@ const searchInput = document.getElementById("searchInput");
         try {
           const json = JSON.parse(e.target.result);
           output.innerHTML = ""; // reset affichage
-         allCommands = []; // reset
+          allCommands = []; // reset
 
           for (const sectionName in json) {
             const sectionData = json[sectionName];
@@ -44,18 +44,18 @@ const searchInput = document.getElementById("searchInput");
 
               commandDiv.appendChild(btn);
               operatorDiv.appendChild(commandDiv);
+                // Sauvegarde pour filtrage
+          allCommands.push({ element: commandDiv, text: item.command.toLowerCase() });
             });
-allCommands.push({ element: commandDiv, text: item.command.toLowerCase() });
-            });
-         
+
             output.appendChild(operatorDiv);
           }
         } catch (err) {
-          output.textContent = "❌ Erreur : JSON invalid";
+          output.textContent = "❌ Error : JSON invalid";
         }
       };
     
-     reader.readAsText(file);
+      reader.readAsText(file);
     });
     // 🎯 Ajout du filtre
 searchInput.addEventListener("input", () => {
